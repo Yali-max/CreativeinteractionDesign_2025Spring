@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>大作战</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body{
+          margin: 0;
+          padding: 0;
+          height: 100vh;
+          background-image: url('背景图2.png');
+          background-size: cover;
+          background-position: center top;
+          background-repeat: no-repeat;
+          background-attachment: scroll;
+        }
+
+        // 背景图
+        .content{
+          height: 100vh;
+          padding: 2vh;
+          font-size: 2.5vh;
+          color: #333;
+          position: relative;
+        }
+
+        .character {
+            position: absolute;
+            width: auto;
+            height: auto;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .character:hover {
+            transform: scale(1.03);
+        }
+
+        /* 文本框样式 */
+        .description-box {
+            position: absolute;
+            width: 20vw;
+            padding: 1vh;
+            background-color: #cccef4;
+            border: 2px solid #333;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 10;
+        }
+
+        .description-box textarea {
+            width: 100%;
+            height: 8vh;
+            padding: 0.5vh;
+            font-size: 2.5vh;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            resize: none;
+        }
+
+        /* 提示框样式 */
+        .info-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            padding: 20px;
+            background-color: #cccef4;
+            border: 2px solid #333;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            z-index: 100;
+        }
+
+        .info-box button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            font-size: 14px;
+            background-color: #cccef4;
+            border: 1px solid #333;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .info-box button:hover {
+            background-color: #aaaacf;
+        }
+
+    </style>
+  </head>
+
+  <body>
+    <div class="content">
+      <img src="画板 14.png" alt="人物 1" class="character" style="top: -5%; left: 30%; z-index: 9" onclick="showDescription(event, '人物 1')">
+
+      <img src="画板 15.png" alt="人物 2" class="character" style="top: 6%; left: -6%; z-index: 7" onclick="showDescription(event, '人物 2')">
+
+      <img src="画板 16.png" alt="人物 3" class="character" style="top: 34%; left: 58%; z-index: 5" onclick="showDescription(event, '人物 3')">
+
+      <img src="画板 17.png" alt="人物 4" class="character" style="top: 75%; left: 36%; z-index: 10" onclick="showDescription(event, '人物 4')">
+
+      <img src="画板 18.png" alt="人物 5" class="character" style="top: 5%; left: 20%; z-index: 2" onclick="showDescription(event, '人物 5')">
+
+      <img src="画板 19.png" alt="人物 6" class="character" style="top: 70%; left: -10%; z-index: 8" onclick="showDescription(event, '人物 6')">
+
+      <img src="画板 20.png" alt="人物 7" class="character" style="top: 50%; left: 20%; z-index: 6" onclick="showDescription(event, '人物 7')">
+
+
+      <div id="descriptionBox" class="description-box">
+          <textarea id="descriptionInput" placeholder="在这里输入角色介绍..."></textarea>
+      </div>
+    </div>
+
+
+    <div id="infoBox" class="info-box">
+        <p>被遗忘在抽屉角落的文具集体觉醒，在荧光笔团长的带领下，众文具一起相应争取自由！
+          （点击查看角色属性）</p>
+        <button onclick="closeInfoBox()">确定</button>
+    </div>
+
+    <script>
+
+      // 存储每个角色的描述内容
+      const characterDescriptions = {
+          '人物 1': '英勇的文具团团长——荧光笔团长',
+          '人物 2': '团结一心的尺规兵团',
+          '人物 3': '充满智慧的剪刀副团长',
+          '人物 4': '因公殉职的铅笔骑士及其家属——橡皮骑士',
+          '人物 5': '钢笔骑士',
+          '人物 6': '殚精竭虑的胶水骑士',
+          '人物 7': '受伤的胶带骑士'
+      };
+
+      let currentCharacter = null;
+
+        function showDescription(event, characterName) {
+          // 阻止事件冒泡
+          event.stopPropagation();
+
+          // 设置当前角色
+          currentCharacter = characterName;
+
+          // 显示文本框
+          const descriptionBox = document.getElementById('descriptionBox');
+          descriptionBox.style.display = 'block';
+
+          // 设置文本框位置
+          descriptionBox.style.top = `${event.clientY}px`;
+          descriptionBox.style.left = `${event.clientX}px`;
+
+          // 设置文本框内容
+          const descriptionInput = document.getElementById('descriptionInput');
+          descriptionInput.value = characterDescriptions[characterName];
+          descriptionInput.placeholder = `为 ${characterName} 输入角色介绍...`;
+      }
+
+      // 点击页面其他区域关闭文本框
+      document.addEventListener('click', function () {
+          const descriptionBox = document.getElementById('descriptionBox');
+          const descriptionInput = document.getElementById('descriptionInput');
+
+          if (descriptionBox.style.display === 'block') {
+              // 保存当前输入的内容到对应角色
+              if (currentCharacter) {
+                  characterDescriptions[currentCharacter] = descriptionInput.value;
+              }
+              descriptionBox.style.display = 'none';
+          }
+      });
+
+      // 关闭提示框
+        function closeInfoBox() {
+            const infoBox = document.getElementById('infoBox');
+            infoBox.style.display = 'none';
+        }
+
+        // 页面加载完成后显示提示框
+        window.onload = function () {
+            const infoBox = document.getElementById('infoBox');
+            infoBox.style.display = 'block';
+        };
+
+    </script>
+
+  </body>
+</html>

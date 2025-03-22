@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>大作战</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body{
+          margin: 0;
+          padding: 0;
+          height: 100vh;
+          background-image: url('背景图1.png');
+          background-size: cover;
+          background-position: center top;
+          background-repeat: no-repeat;
+          background-attachment: scroll;
+        }
+
+        .content{
+          height: 100vh;
+          padding: 20px;
+          font-size:24px;
+          color: #333;
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+          padding-bottom: 20%;
+        }
+
+        #jumpButton {
+          padding: 10px 20px;
+          font-size: 18px;
+          color: white;
+          background-color: #ef9ad1;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          margin-bottom: 200px;
+          border: 1.5px solid black;
+        }
+
+        #jumpButton:hover {
+          background-color: #6d8fe3;
+        }
+
+    </style>
+  </head>
+
+  <body>
+    <div class="content">
+      <button id="jumpButton">Open Up A New World</button>
+    </div>
+
+    <script>
+    document.getElementById('jumpButton').addEventListener('click', function() {
+        window.location.href = 'new page.html';
+    });
+   </script>
+
+  </body>
+</html>
